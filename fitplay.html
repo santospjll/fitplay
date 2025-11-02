@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPlay - Plataforma de Cursos Fitness</title>
+    <style>
+        :root {
+            --primary-color: #e50914;
+            --dark-color: #141414;
+            --light-color: #f4f4f4;
+            --gray-color: #999;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--light-color);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 70vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 80px; /* CORREÇÃO: mudado de padding-top para margin-top */
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #f40612;
+        }
+
+        /* Courses Section */
+        .section-title {
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            padding-left: 20px;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 20px 40px;
+        }
+
+        .course-card {
+            background-color: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .course-card:hover {
+            transform: scale(1.05);
+        }
+
+        .course-img {
+            width: 100%;
+            height: 150px;
+            background-color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .course-info {
+            padding: 15px;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .course-description {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            height: 60px;
+            overflow: hidden;
+        }
+
+        .course-price {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-links li {
+            margin: 0 15px;
+        }
+
+        .copyright {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-modal {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #222;
+            color: white;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">FitPlay</div>
+                <ul class="nav-links">
+                    <li><a href="#" id="home-link">Início</a></li>
+                    <li><a href="#" id="courses-link">Cursos</a></li>
+                    <li><a href="#" id="login-link">Entrar</a></li>
+                    <li><a href="#" id="register-link">Cadastrar</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Transforme seu corpo, transforme sua vida</h1>
+            <p>Acesse os melhores cursos de fitness com os melhores profissionais</p>
+            <a href="#" class="btn" id="hero-register">Comece Agora</a>
+        </div>
+    </section>
+
+    <!-- Featured Courses -->
+    <section id="featured-courses">
+        <h2 class="section-title">Cursos em Destaque</h2>
+        <div class="courses-grid" id="featured-courses-grid">
+            <!-- Courses will be loaded here dynamically -->
+        </div>
+    </section>
+
+    <!-- All Courses -->
+    <section id="all-courses">
+        <h2 class="section-title">Todos os Cursos</h2>
+        <div class="courses-grid" id="all-courses-grid">
+            <!-- Courses will be loaded here dynamically -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Contato</a></li>
+                <li><a href="#">Termos de Uso</a></li>
+            </ul>
+            <p class="copyright">&copy; 2023 FitPlay. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Entrar</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">E-mail</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Senha</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn" id="login-submit">Entrar</button>
+                    <button type="button" class="btn" id="show-register">Cadastrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Cadastrar</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Nome Completo</label>
+                    <input type="text" id="register-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">E-mail</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Senha</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-type">Tipo de Usuário</label>
+                    <select id="register-type" required>
+                        <option value="">Selecione</option>
+                        <option value="cliente">Aluno</option>
+                        <option value="personal">Personal Trainer</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn" id="register-submit">Cadastrar</button>
+                    <button type="button" class="btn" id="show-login">Entrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Course Details Modal -->
+   
+
+    <script>
+        // Sample data - In a real application, this would come from the backend
+        const sampleCourses = [
+            {
+                id: 1,
+                title: "Yoga para Iniciantes",
+                description: "Aprenda os fundamentos do yoga e melhore sua flexibilidade e bem-estar.",
+                price: 49.90,
+                instructor: "Ana Silva",
+                image: "🧘",
+                featured: true
+            },
+            {
+                id: 2,
+                title: "Treino de Alta Intensidade",
+                description: "Queime calorias e aumente sua resistência com exercícios de alta intensidade.",
+                price: 79.90,
+                instructor: "Carlos Mendes",
+                image: "💪",
+                featured: true
+            },
+            {
+                id: 3,
+                title: "Pilates Avançado",
+                description: "Técnicas avançadas de pilates para fortalecimento do core e postura.",
+                price: 69.90,
+                instructor: "Mariana Costa",
+                image: "🧍",
+                featured: false
+            },
+            {
+                id: 4,
+                title: "Meditação Guiada",
+                description: "Reduza o estresse e aumente seu foco com técnicas de meditação.",
+                price: 39.90,
+                instructor: "João Santos",
+                image: "🧘‍♂️",
+                featured: false
+            },
+            {
+                id: 5,
+                title: "Nutrição Esportiva",
+                description: "Aprenda a alimentar seu corpo para maximizar seus resultados nos treinos.",
+                price: 89.90,
+                instructor: "Paula Lima",
+                image: "🥗",
+                featured: true
+            },
+            {
+                id: 6,
+                title: "Alongamento e Flexibilidade",
+                description: "Melhore sua amplitude de movimento e previna lesões com alongamentos.",
+                price: 59.90,
+                instructor: "Ricardo Alves",
+                image: "🤸",
+                featured: false
+            }
+        ];
+
+        // DOM Elements
+        const loginModal = document.getElementById('login-modal');
+        const registerModal = document.getElementById('register-modal');
+        const courseModal = document.getElementById('course-modal');
+        const loginLink = document.getElementById('login-link');
+        const registerLink = document.getElementById('register-link');
+        const heroRegister = document.getElementById('hero-register');
+        const showRegister = document.getElementById('show-register');
+        const showLogin = document.getElementById('show-login');
+        const closeModals = document.querySelectorAll('.close-modal');
+        const featuredCoursesGrid = document.getElementById('featured-courses-grid');
+        const allCoursesGrid = document.getElementById('all-courses-grid');
+        const loginSubmit = document.getElementById('login-submit');
+        const registerSubmit = document.getElementById('register-submit');
+
+        // Event Listeners
+        loginLink.addEventListener('click', () => openModal(loginModal));
+        registerLink.addEventListener('click', () => openModal(registerModal));
+        heroRegister.addEventListener('click', () => openModal(registerModal));
+        showRegister.addEventListener('click', () => {
+            closeModal(loginModal);
+            openModal(registerModal);
+        });
+        showLogin.addEventListener('click', () => {
+            closeModal(registerModal);
+            openModal(loginModal);
+        });
+
+        closeModals.forEach(closeBtn => {
+            closeBtn.addEventListener('click', () => {
+                closeModal(loginModal);
+                closeModal(registerModal);
+                closeModal(courseModal);
+            });
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) closeModal(loginModal);
+            if (e.target === registerModal) closeModal(registerModal);
+            if (e.target === courseModal) closeModal(courseModal);
+        });
+
+        loginSubmit.addEventListener('click', handleLogin);
+        registerSubmit.addEventListener('click', handleRegister);
+
+        // Functions
+        function openModal(modal) {
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(modal) {
+            modal.style.display = 'none';
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!email || !password) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            // In a real application, this would be an API call to the backend
+            console.log('Login attempt:', { email, password });
+            alert('Login realizado com sucesso! Redirecionando...');
+            closeModal(loginModal);
+            
+            // Clear form
+            document.getElementById('login-form').reset();
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const type = document.getElementById('register-type').value;
+            
+            if (!name || !email || !password || !type) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            // In a real application, this would be an API call to the backend
+            console.log('Registration attempt:', { name, email, password, type });
+            alert('Cadastro realizado com sucesso! Aguarde a aprovação do administrador.');
+            closeModal(registerModal);
+            
+            // Clear form
+            document.getElementById('register-form').reset();
+        }
+
+        function renderCourses() {
+            // Clear existing content
+            featuredCoursesGrid.innerHTML = '';
+            allCoursesGrid.innerHTML = '';
+            
+            // Render featured courses
+            sampleCourses.filter(course => course.featured).forEach(course => {
+                featuredCoursesGrid.appendChild(createCourseCard(course));
+            });
+            
+            // Render all courses
+            sampleCourses.forEach(course => {
+                allCoursesGrid.appendChild(createCourseCard(course));
+            });
+        }
+
+        function createCourseCard(course) {
+            const card = document.createElement('div');
+            card.className = 'course-card';
+            card.innerHTML = `
+                <div class="course-img">${course.image}</div>
+                <div class="course-info">
+                    <h3 class="course-title">${course.title}</h3>
+                    <p class="course-description">${course.description}</p>
+                    <p class="course-price">R$ ${course.price.toFixed(2)}</p>
+                    <button class="btn view-course" data-id="${course.id}">Ver Detalhes</button>
+                </div>
+            `;
+            
+            card.querySelector('.view-course').addEventListener('click', () => showCourseDetails(course.id));
+            
+            return card;
+        }
+
+        function showCourseDetails(courseId) {
+            const course = sampleCourses.find(c => c.id === courseId);
+            if (!course) return;
+            
+            document.getElementById('course-modal-title').textContent = course.title;
+            document.getElementById('course-modal-content').innerHTML = `
+                <div class="course-details">
+                    <div class="course-img-large" style="font-size: 4rem; text-align: center; margin-bottom: 20px;">${course.image}</div>
+                    <p><strong>Instrutor:</strong> ${course.instructor}</p>
+                    <p><strong>Descrição:</strong> ${course.description}</p>
+                    <p><strong>Preço:</strong> R$ ${course.price.toFixed(2)}</p>
+                    <div class="form-actions">
+                        <button class="btn" id="buy-course">Comprar Curso</button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('buy-course').addEventListener('click', () => {
+                alert(`Curso "${course.title}" adicionado ao carrinho!`);
+                closeModal(courseModal);
+            });
+            
+            openModal(courseModal);
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCourses();
+        });
+    </script>
+</body>
+</html>
